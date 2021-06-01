@@ -29,13 +29,9 @@ module "my-cluster" {
   ]
 }
 
-output "kubeconfig" {
-  description = "kubectl config file contents for this EKS cluster. Will block on cluster creation until the cluster is really ready."
-  value       = local.kubeconfig
-
-  # So that calling plans wait for the cluster to be available before attempting to use it.
-  # There is no need to duplicate this datasource
-  depends_on = [data.http.wait_for_cluster]
+resource "local_file" "kubeconfig" {  
+  content              = local.kubeconfig
+  filename             = "kubeconfig"  
 }
 
 output "cluster_url" {
