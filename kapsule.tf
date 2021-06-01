@@ -21,7 +21,7 @@ resource "scaleway_k8s_cluster_beta" "griloKapsule" {
 
 resource "local_file" "kubeconfig" {
   content = scaleway_k8s_cluster_beta.griloKapsule.kubeconfig[0].config_file
-  filename = "${path.module}/kubeconfig"
+  filename = "kubeconfig"
 }
 
 output "cluster_url" {
