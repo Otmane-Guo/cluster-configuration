@@ -32,8 +32,10 @@ output "client_certificate" {
   value = azurerm_kubernetes_cluster.example.kube_config.0.client_certificate
 }
 
-output "kubeconfig" {
-  value = azurerm_kubernetes_cluster.example.kube_config_raw
+resource "local_file" "kubeconfig" {
+  depends_on   = [azurerm_kubernetes_cluster.cluster]
+  filename     = "kubeconfig"
+  content      = azurerm_kubernetes_cluster.cluster.kube_config_raw
 }
     
 output "cluster_url" {
